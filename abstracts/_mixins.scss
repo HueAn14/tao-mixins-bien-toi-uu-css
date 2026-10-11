@@ -1,0 +1,40 @@
+// ===================================================
+// BƯỚC 3: TẠO MIXINS TÁI SỬ DỤNG
+// abstracts/_mixins.scss
+// Mixins giúp đóng gói các khối thuộc tính CSS dùng nhiều lần.
+// ===================================================
+
+@mixin button-style($bg-color) {
+  background: $bg-color;
+  color: white;
+  padding: $padding-standard;
+  border-radius: 5px;
+  display: inline-block;
+  text-decoration: none;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s ease-in-out;
+
+  &:hover {
+    filter: brightness(0.9);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+@mixin box-style {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: $box-shadow-default;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+
+  &:hover {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  }
+}

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>[Thực hành] Tạo mixins & biến để tối ưu CSS - CodeGym</title>
+  <link rel="stylesheet" href="main.css">
+  <style>
+    /* Bổ sung một số style demo trực quan cho trang nộp bài */
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 10px;
+    }
+    .badge-primary { background: #fee2e2; color: #dc2626; }
+    .badge-secondary { background: #dbeafe; color: #2563eb; }
+    .badge-success { background: #dcfce7; color: #16a34a; }
+
+    .color-preview {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border-radius: 3px;
+      vertical-align: middle;
+      margin-right: 6px;
+      border: 1px solid rgba(0,0,0,0.1);
+    }
+
+    pre code {
+      display: block;
+      background: #0f172a;
+      color: #f8fafc;
+      padding: 16px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 13px;
+      line-height: 1.5;
+      font-family: Consolas, 'Courier New', monospace;
+    }
+
+    .tab-header {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+      border-bottom: 1px solid #e2e8f0;
+      padding-bottom: 8px;
+    }
+    .tab-btn {
+      padding: 6px 14px;
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      font-size: 13px;
+      cursor: pointer;
+      font-weight: 500;
+      color: #475569;
+    }
+    .tab-btn.active {
+      background: #0f172a;
+      color: white;
+      border-color: #0f172a;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <span class="badge badge-primary">CodeGym Exercise</span>
+      <h1>[Thực hành] Tạo Mixins & Biến Tối Ưu CSS</h1>
+      <p class="subtitle">Sử dụng SASS Variables & Mixins để loại bỏ trùng lặp code và dễ dàng quản lý giao diện</p>
+    </header>
+
+    <!-- Mục tiêu & Kết quả -->
+    <section class="demo-section">
+      <h2 class="section-title">🎯 Mục Tiêu & Kết Quả Đạt Được</h2>
+      <ul style="padding-left: 20px; line-height: 1.8;">
+        <li>✔ <strong>Tạo Mixins giúp giảm lặp code:</strong> Đóng gói các thuộc tính định kiểu nút (<span class="code-badge">button-style</span>) và thẻ hộp (<span class="code-badge">box-style</span>).</li>
+        <li>✔ <strong>Dùng Biến kiểm soát toàn bộ giao diện:</strong> Quản lý màu sắc (<span class="code-badge">$primary-color</span>, <span class="code-badge">$text-color</span>), cỡ chữ (<span class="code-badge">$font-large</span>, <span class="code-badge">$font-medium</span>), padding và box-shadow.</li>
+        <li>✔ <strong>Cải thiện tính tái sử dụng:</strong> Khi cần thay đổi kiểu dáng hay màu sắc, chỉ cần cập nhật tại một file biến duy nhất.</li>
+      </ul>
+    </section>
+
+    <!-- Demo Typography -->
+    <section class="demo-section">
+      <h2 class="section-title">1. Demo Typography (Áp dụng $font-large, $font-medium, $text-color)</h2>
+      <div style="background: #f8fafc; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0;">
+        <h1>Tiêu đề Heading 1 - Áp dụng font-size 32px & color #222</h1>
+        <h2>Tiêu đề Heading 2 - Áp dụng font-size 28px & color #222</h2>
+        <p style="color: #64748b; font-size: 14px;">Được định nghĩa trong file <span class="code-badge">base/_typography.scss</span> bằng các biến SASS.</p>
+      </div>
+    </section>
+
+    <!-- Demo Buttons -->
+    <section class="demo-section">
+      <h2 class="section-title">2. Demo Buttons (Áp dụng mixin @include button-style)</h2>
+      <p style="margin-bottom: 12px; color: #64748b;">Nút bấm chuẩn theo đề bài (màu đỏ) và các biến thể mở rộng chứng minh tính tái sử dụng của Mixin:</p>
+      <div class="buttons-group">
+        <button class="button">Nút chính (Màu Đỏ theo đề bài)</button>
+        <button class="button button--secondary">Nút phụ (Secondary)</button>
+        <button class="button button--success">Nút thành công (Success)</button>
+      </div>
+      <p style="margin-top: 12px; font-size: 13px; color: #64748b;">
+        Mã SASS: <span class="code-badge">.button { @include button-style($primary-color); }</span>
+      </p>
+    </section>
+
+    <!-- Demo Cards -->
+    <section class="demo-section">
+      <h2 class="section-title">3. Demo Cards (Áp dụng mixin @include box-style)</h2>
+      <p style="color: #64748b;">Tất cả thẻ card đều kế thừa padding: 15px, border-radius: 10px, background: white và box-shadow chuẩn:</p>
+      <div class="cards-grid">
+        <div class="card">
+          <span class="badge badge-primary">Sản phẩm 1</span>
+          <h2 style="font-size: 20px;">Khoá học Lập trình Web</h2>
+          <p style="color: #64748b; font-size: 14px; margin-bottom: 15px;">Thực hành làm chủ HTML5, CSS3, SASS/SCSS từ cơ bản đến nâng cao.</p>
+          <button class="button" style="width: 100%; text-align: center;">Đăng ký học</button>
+        </div>
+
+        <div class="card">
+          <span class="badge badge-secondary">Sản phẩm 2</span>
+          <h2 style="font-size: 20px;">Lập trình Frontend</h2>
+          <p style="color: #64748b; font-size: 14px; margin-bottom: 15px;">Xây dựng ứng dụng web hiện đại với giao diện mượt mà và tối ưu hiệu năng.</p>
+          <button class="button button--secondary" style="width: 100%; text-align: center;">Xem chi tiết</button>
+        </div>
+
+        <div class="card">
+          <span class="badge badge-success">Sản phẩm 3</span>
+          <h2 style="font-size: 20px;">Kiến trúc SASS 7-1</h2>
+          <p style="color: #64748b; font-size: 14px; margin-bottom: 15px;">Tổ chức mã nguồn CSS theo module chuyên nghiệp và dễ bảo trì.</p>
+          <button class="button button--success" style="width: 100%; text-align: center;">Tìm hiểu thêm</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- So sánh trước và sau khi tối ưu -->
+    <section class="demo-section">
+      <h2 class="section-title">4. Bảng So Sánh Trước & Sau Tối Ưu</h2>
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th>Tiêu chí</th>
+            <th>CSS Truyền thống (Trước tối ưu)</th>
+            <th>SASS Variables & Mixins (Sau tối ưu)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Màu sắc & Kích thước</strong></td>
+            <td>Ghi cứng (Hardcoded: <span class="color-preview" style="background: red;"></span>red, #222, 32px) khắp nơi.</td>
+            <td>Tập trung trong <span class="code-badge">_variables.scss</span> (<span class="code-badge">$primary-color</span>, <span class="code-badge">$font-large</span>).</td>
+          </tr>
+          <tr>
+            <td><strong>Lặp code kiểu dáng nút</strong></td>
+            <td>Mỗi loại nút phải viết lại padding, border-radius, color.</td>
+            <td>Dùng <span class="code-badge">@mixin button-style($bg)</span> tái sử dụng 100%.</td>
+          </tr>
+          <tr>
+            <td><strong>Kiểu dáng Card / Hộp</strong></td>
+            <td>Viết lại bóng mờ, bo góc, đệm lề cho từng thành phần.</td>
+            <td>Dùng <span class="code-badge">@mixin box-style</span> chỉ bằng 1 dòng <span class="code-badge">@include</span>.</td>
+          </tr>
+          <tr>
+            <td><strong>Bảo trì & Thay đổi giao diện</strong></td>
+            <td>Phải tìm và sửa thủ công ở hàng chục selector.</td>
+            <td>Chỉ cần sửa biến một lần, toàn hệ thống tự động cập nhật.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Cấu trúc mã nguồn -->
+    <section class="demo-section">
+      <h2 class="section-title">5. Cấu Trúc File Đã Thực Hiện</h2>
+      <pre><code>📁 Bai-Tap-CodeGym1/
+├── 📄 index.html                  # Trang demo giao diện mẫu
+├── 📄 styles-original.css         # Bước 1: File CSS gốc trước khi tối ưu
+├── 📁 abstracts/
+│   ├── 📄 _variables.scss         # Bước 2: Khai báo biến SASS
+│   └── 📄 _mixins.scss            # Bước 3: Khai báo mixin tái sử dụng
+├── 📁 base/
+│   └── 📄 _typography.scss        # Bước 4: Áp dụng biến vào h1, h2
+├── 📁 components/
+│   ├── 📄 _buttons.scss           # Bước 4: Áp dụng button-style mixin
+│   └── 📄 _cards.scss             # Bước 4: Áp dụng box-style mixin
+├── 📄 main.scss                   # File tổng hợp import tất cả partials
+├── 📄 main.css                    # File CSS sau khi biên dịch từ SASS
+├── 📄 package.json                # Script biên dịch npm
+└── 📄 README.md                   # Báo cáo và hướng dẫn chi tiết</code></pre>
+    </section>
+  </div>
+</body>
+</html>

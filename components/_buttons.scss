@@ -1,0 +1,17 @@
+// ===================================================
+// BƯỚC 4: ÁP DỤNG MIXIN VÀO BUTTONS
+// components/_buttons.scss
+// ===================================================
+
+.button {
+  @include button-style($primary-color);
+
+  // Biến thể mở rộng áp dụng mixin linh hoạt
+  &--secondary {
+    @include button-style($secondary-color);
+  }
+
+  &--success {
+    @include button-style($success-color);
+  }
+}

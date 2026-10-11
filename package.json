@@ -1,0 +1,20 @@
+{
+  "name": "tao-mixins-bien-toi-uu-css",
+  "version": "1.0.0",
+  "description": "[Thực hành] Tạo mixins & biến để tối ưu CSS của website mẫu - CodeGym",
+  "main": "main.css",
+  "scripts": {
+    "compile:sass": "sass main.scss main.css",
+    "watch:sass": "sass --watch main.scss main.css"
+  },
+  "keywords": [
+    "codegym",
+    "sass",
+    "scss",
+    "mixins",
+    "variables",
+    "css-optimization"
+  ],
+  "author": "HueAn14",
+  "license": "MIT"
+}
